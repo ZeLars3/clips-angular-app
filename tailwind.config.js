@@ -3,7 +3,10 @@ module.exports = {
     './src/**/*.{html,js,ts}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      opacity: ['disabled'],
+      backgroundColor: ['disabled'],
+    },
   },
   plugins: [],
 }

@@ -1,0 +1,115 @@
+<app-alert *ngIf="showAlert" [color]="alertColor">
+  {{ alertMessage }}
+</app-alert>
+
+<!-- Registration Form -->
+<form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+  <!-- Name -->
+  <div class="mb-3">
+    <label class="inline-block mb-2">Name</label>
+    <input formControlName="name" type="text"
+      class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
+      placeholder="Enter Name" />
+    <p *ngIf="
+        registerForm.get('name')?.hasError('required') &&
+        registerForm.get('name')?.touched
+      " class="text-red-400">
+      Name is required
+    </p>
+
+    <p *ngIf="registerForm.get('name')?.hasError('minlength')" class="text-red-400">
+      Name must be at least 3 characters
+    </p>
+
+    <p *ngIf="registerForm.get('name')?.hasError('maxlength')" class="text-red-400">
+      Name must be less than or equal to 20 characters
+    </p>
+
+    <p *ngIf="registerForm.get('name')?.hasError('firstName')" class="text-red-400">
+      Name must contain only alphabets
+    </p>
+  </div>
+  <!-- Email -->
+  <div class="mb-3">
+    <label class="inline-block mb-2">Email</label>
+    <input formControlName="email" type="email"
+      class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
+      placeholder="Enter Email" />
+
+    <p *ngIf="
+        registerForm.get('email')?.hasError('required') &&
+        registerForm.get('email')?.touched
+      " class="text-red-400">
+      Email is required
+    </p>
+
+    <p *ngIf="registerForm.get('email')?.hasError('email')" class="text-red-400">
+      Please enter a valid email
+    </p>
+  </div>
+  <!-- Age -->
+  <div class="mb-3">
+    <label class="inline-block mb-2">Age</label>
+    <input formControlName="age" type="number"
+      class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400" />
+
+    <p *ngIf="
+        registerForm.get('age')?.hasError('required') &&
+        registerForm.get('age')?.touched
+      " class="text-red-400">
+      Age is required
+    </p>
+
+    <p *ngIf="
+        registerForm.get('age')?.hasError('min') ||
+        registerForm.get('age')?.hasError('max')
+      " class="text-red-400">
+      Age must be between 18 and 80
+    </p>
+  </div>
+  <!-- Password -->
+  <div class="mb-3">
+    <label class="inline-block mb-2">Password</label>
+    <input formControlName="password" type="password"
+      class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
+      placeholder="Password" />
+
+    <p *ngIf="
+        registerForm.get('password')?.hasError('required') &&
+        registerForm.get('password')?.touched
+      " class="text-red-400">
+      Password is required
+    </p>
+
+    <p *ngIf="
+        registerForm.get('password')?.hasError('minlength') ||
+        registerForm.get('password')?.hasError('maxlength')
+      " class="text-red-400">
+      Password must be between 6 and 20 characters
+    </p>
+
+    <p *ngIf="registerForm.get('password')?.hasError('password')" class="text-red-400">
+      Password must contain at least one number, one uppercase letter, and one
+      lowercase letter
+    </p>
+  </div>
+  <!-- Confirm Password -->
+  <div class="mb-3">
+    <label class="inline-block mb-2">Confirm Password</label>
+    <input formControlName="confirmPassword" type="password"
+      class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
+      placeholder="Confirm Password" />
+  </div>
+  <!-- Phone Number -->
+  <div class="mb-3">
+    <label class="inline-block mb-2">Phone Number</label>
+    <input formControlName="phoneNumber" type="text"
+      class="block w-full py-1.5 px-3 text-gray-200 border border-gray-400 transition duration-500 focus:outline-none rounded bg-transparent focus:border-indigo-400"
+      placeholder="Enter Phone Number" />
+  </div>
+  <button type="submit"
+    class="block w-full bg-indigo-400 text-white py-1.5 px-3 rounded transition hover:bg-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed disabled:bg-indigo-400"
+    [disabled]="!registerForm.valid">
+    Submit
+  </button>
+</form>

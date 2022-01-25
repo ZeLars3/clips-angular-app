@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IModal } from '../models/modal.interface';
+import { TabComponent } from '../tab/tab.component';
 
 @Injectable({
   providedIn: 'root'
