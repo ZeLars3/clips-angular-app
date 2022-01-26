@@ -7,14 +7,13 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class AlertComponent implements OnInit {
   @Input() color = 'blue';
-
+  
   constructor() { }
-
+  
   ngOnInit(): void {
   }
-
-  get backgroundColor() {
+  
+  get bgColor() {
     return `bg-${this.color}-400`;
   }
-
 }

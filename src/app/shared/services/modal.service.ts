@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { IModal } from '../models/modal.interface';
+import { IModal } from '../models/modal';
 import { TabComponent } from '../tab/tab.component';
 
 @Injectable({
