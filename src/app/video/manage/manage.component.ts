@@ -1,18 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage',
   templateUrl: './manage.component.html',
-  styleUrls: ['./manage.component.scss']
+  styleUrls: ['./manage.component.scss'],
 })
 export class ManageComponent implements OnInit {
+  videoOrder: string = '1';
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(private router: Router, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.route.data.subscribe(data => {
-      console.log(data);
+    this.route.queryParamMap.subscribe((params: Params) => {
+      this.videoOrder = params['sort'] === '2' ? params['sort'] : '1';
     });
+  }
+
+  onSort(event: Event): void {
+    const { value } = event.target as HTMLInputElement;
+
+    this.router.navigate(['/clips'])
   }
 }
