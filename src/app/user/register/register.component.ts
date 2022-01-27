@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { EmailTaken } from 'src/app/shared/validators/email-taken';
 import { RegisterValidator } from './register.validator';
 
 @Component({
@@ -15,7 +16,7 @@ export class RegisterComponent implements OnInit {
   alertColor = 'blue';
   inSubmission: boolean = false;
 
-  constructor(private auth: AuthService) {}
+  constructor(private auth: AuthService, private emailTaken: EmailTaken) {}
 
   ngOnInit(): void {}
 
@@ -26,7 +27,7 @@ export class RegisterComponent implements OnInit {
       Validators.maxLength(20),
       RegisterValidator.firstName,
     ]),
-    email: new FormControl('', [Validators.required, Validators.email]),
+    email: new FormControl('', [Validators.required, Validators.email], [this.emailTaken.validate]),
     age: new FormControl('', [
       Validators.required,
       Validators.min(18),
@@ -49,7 +50,7 @@ export class RegisterComponent implements OnInit {
       Validators.minLength(13),
       Validators.maxLength(13),
     ]),
-  });
+  }, [RegisterValidator.match('password', 'confirmPassword')]);
 
   async onRegister() {
     this.showAlert = true;

@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+
+import { AuthService } from '../shared/services/auth.service';
 import { ModalService } from '../shared/services/modal.service';
 
 @Component({
@@ -8,7 +10,7 @@ import { ModalService } from '../shared/services/modal.service';
 })
 export class NavComponent implements OnInit {
 
-  constructor(private modalService: ModalService) { }
+  constructor(private modalService: ModalService, public auth: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -16,6 +18,11 @@ export class NavComponent implements OnInit {
   onOpenModal(event: Event) {
     event.preventDefault();
     this.modalService.toggleModal('auth');
+  }
+
+  onLogout($event: Event) {
+    $event.preventDefault();
+    this.auth.logout();
   }
 
 }

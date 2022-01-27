@@ -4,7 +4,8 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
-import { Observable, Subject } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import IUser from '../models/user';
 @Injectable({
   providedIn: 'root',
@@ -15,12 +16,10 @@ export class AuthService implements OnInit {
 
   constructor(private auth: AngularFireAuth, private db: AngularFirestore) {
     this.usersCollection = this.db.collection<IUser>('users');
+    this.isAuthenticated$ = this.auth.user.pipe(map((user) => !!user));
   }
-
-   ngOnInit(): void {
-    this.isAuthenticated$ = this.auth.pipe(
-      map(user => !!user)
-    );
+  
+  ngOnInit(): void {
   }
 
   async createUser(userData: IUser) {
@@ -50,5 +49,9 @@ export class AuthService implements OnInit {
     });
 
     return user;
+  }
+
+  async logout() {
+    await this.auth.signOut();
   }
 }
