@@ -1,28 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit {
-  showAlert: boolean = false;
-  alertMessage: string = 'Please wait...';
-  alertColor: string = 'blue';
-  inSubmission: boolean = false;
+export class LoginComponent {
+  public showAlert: boolean = false;
+  public alertMessage: string = 'Please wait...';
+  public alertColor: string = 'blue';
+  public inSubmission: boolean = false;
 
   constructor(private auth: AngularFireAuth) {}
 
-  ngOnInit(): void {}
-
-  loginForm = new FormGroup({
+  loginForm: FormGroup = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl(''),
   });
 
-  async onLogin() {
+  public async onLogin(): Promise<void> {
     this.showAlert = true;
     this.alertMessage = 'Please wait...';
     this.alertColor = 'blue';
@@ -31,7 +28,6 @@ export class LoginComponent implements OnInit {
     try {
       const { email, password } = this.loginForm.value;
       const user = await this.auth.signInWithEmailAndPassword(email, password);
-
     } catch (error: any) {
       this.inSubmission = false;
       this.alertMessage = error.message;

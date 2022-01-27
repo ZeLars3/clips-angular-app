@@ -16,7 +16,14 @@ import { ClipComponent } from './clip/clip.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
-  declarations: [AppComponent, NavComponent, HomeComponent, AboutComponent, ClipComponent, NotFoundComponent],
+  declarations: [
+    AppComponent,
+    NavComponent,
+    HomeComponent,
+    AboutComponent,
+    ClipComponent,
+    NotFoundComponent,
+  ],
   imports: [
     BrowserModule,
     UserModule,

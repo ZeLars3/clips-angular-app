@@ -105,7 +105,7 @@
       placeholder="Confirm Password" />
 
     <p *ngIf="
-        registerForm.get('confirmPassword')?.hasError('noMatch') && 
+        registerForm.get('confirmPassword')?.hasError('noMatch') &&
         registerForm.get('confirmPassword')?.touched
       " class="text-red-400">
       Passwords do not match

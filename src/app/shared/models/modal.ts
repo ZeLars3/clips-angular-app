@@ -1,4 +1,4 @@
-export interface IModal {
-    id: string;
-    visible: boolean;
+export default interface IModal {
+  id: string;
+  visible: boolean;
 }

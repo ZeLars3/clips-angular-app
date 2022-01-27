@@ -1,4 +1,9 @@
-import { AbstractControl, FormControl, ValidationErrors, ValidatorFn } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  ValidationErrors,
+  ValidatorFn,
+} from '@angular/forms';
 
 export class RegisterValidator {
   static firstName(control: FormControl): { [key: string]: boolean } | null {
@@ -28,15 +33,16 @@ export class RegisterValidator {
       const control = group.get(controlName);
       const matchingControl = group.get(matchingControlName);
 
-      if(!control || !matchingControl) {
-        return {controlNotFound: false};
+      if (!control || !matchingControl) {
+        return { controlNotFound: false };
       }
 
-      const error = control.value !== matchingControl.value ? null : {noMatch: true};
+      const error =
+        control.value !== matchingControl.value ? null : { noMatch: true };
 
       matchingControl.setErrors(error);
 
       return error;
-    }
+    };
   }
 }

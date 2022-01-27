@@ -1,33 +1,30 @@
 import { Injectable } from '@angular/core';
-import { IModal } from '../models/modal';
-import { TabComponent } from '../tab/tab.component';
+import IModal from '../models/modal';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ModalService {
-  visible = false;
+  private visible: boolean = false;
   private modals: IModal[] = [];
 
-  constructor() { }
-
-  isModalOpen(id: string): boolean {
+  public isModalOpen(id: string): boolean {
     return !!this.modals.find(modal => modal.id === id)?.visible;
   }
    
 
-  toggleModal(id: string) {
+  public toggleModal(id: string): void {
     const modal = this.modals.find(modal => modal.id === id);
     if (modal) {
       modal.visible = !modal.visible;
     }
   }
 
-  registerModal(id: string) {
+  public registerModal(id: string): void {
     this.modals.push({ id: id, visible: false });
   }
 
-  unregisterModal(id: string) {
+  public unregisterModal(id: string): void {
     this.modals = this.modals.filter(modal => modal.id !== id);
   }
 }

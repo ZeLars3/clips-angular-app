@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/services/auth.service';
@@ -8,51 +8,55 @@ import { RegisterValidator } from './register.validator';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
 })
-export class RegisterComponent implements OnInit {
-  showAlert = false;
-  alertMessage = '';
-  alertColor = 'blue';
-  inSubmission: boolean = false;
+export class RegisterComponent {
+  public showAlert: boolean = false;
+  public alertMessage: string = '';
+  public alertColor: string = 'blue';
+  public inSubmission: boolean = false;
 
   constructor(private auth: AuthService, private emailTaken: EmailTaken) {}
 
-  ngOnInit(): void {}
+  registerForm: FormGroup = new FormGroup(
+    {
+      name: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(20),
+        RegisterValidator.firstName,
+      ]),
+      email: new FormControl(
+        '',
+        [Validators.required, Validators.email],
+        [this.emailTaken.validate]
+      ),
+      age: new FormControl('', [
+        Validators.required,
+        Validators.min(18),
+        Validators.max(80),
+      ]),
+      password: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(20),
+        RegisterValidator.password,
+      ]),
+      confirmPassword: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+        Validators.maxLength(20),
+        RegisterValidator.password,
+      ]),
+      phoneNumber: new FormControl('', [
+        Validators.required,
+        Validators.minLength(13),
+        Validators.maxLength(13),
+      ]),
+    },
+    [RegisterValidator.match('password', 'confirmPassword')]
+  );
 
-  registerForm = new FormGroup({
-    name: new FormControl('', [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(20),
-      RegisterValidator.firstName,
-    ]),
-    email: new FormControl('', [Validators.required, Validators.email], [this.emailTaken.validate]),
-    age: new FormControl('', [
-      Validators.required,
-      Validators.min(18),
-      Validators.max(80),
-    ]),
-    password: new FormControl('', [
-      Validators.required,
-      Validators.minLength(6),
-      Validators.maxLength(20),
-      RegisterValidator.password,
-    ]),
-    confirmPassword: new FormControl('', [
-      Validators.required,
-      Validators.minLength(6),
-      Validators.maxLength(20),
-      RegisterValidator.password,
-    ]),
-    phoneNumber: new FormControl('', [
-      Validators.required,
-      Validators.minLength(13),
-      Validators.maxLength(13),
-    ]),
-  }, [RegisterValidator.match('password', 'confirmPassword')]);
-
-  async onRegister() {
+  public async onRegister(): Promise<void> {
     this.showAlert = true;
     this.alertMessage = 'Please wait...';
     this.alertColor = 'blue';

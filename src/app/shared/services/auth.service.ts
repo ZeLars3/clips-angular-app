@@ -1,4 +1,4 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import {
   AngularFirestore,
@@ -11,10 +11,10 @@ import IUser from '../models/user';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService implements OnInit {
+export class AuthService {
   private usersCollection: AngularFirestoreCollection<IUser>;
   public isAuthenticated$!: Observable<boolean>;
-  private redirect: boolean = false
+  private redirect: boolean = false;
 
   constructor(
     private auth: AngularFireAuth,
@@ -33,11 +33,8 @@ export class AuthService implements OnInit {
     //   this.redirect = data.authOnly ?? false;
     // });
   }
-  
-  ngOnInit(): void {
-  }
 
-  async createUser(userData: IUser) {
+  public async createUser(userData: IUser): Promise<void> {
     if (!userData.password) {
       throw new Error('Password is required');
     }
@@ -66,7 +63,7 @@ export class AuthService implements OnInit {
     return user;
   }
 
-  async logout() {
+  async logout(): Promise<void> {
     await this.auth.signOut();
     await this.router.navigate(['/']);
   }
