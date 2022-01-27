@@ -4,8 +4,9 @@ import {
   AngularFirestore,
   AngularFirestoreCollection,
 } from '@angular/fire/compat/firestore';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { Observable, of } from 'rxjs';
+import { filter, map, switchMap } from 'rxjs/operators';
 import IUser from '../models/user';
 @Injectable({
   providedIn: 'root',
@@ -13,10 +14,24 @@ import IUser from '../models/user';
 export class AuthService implements OnInit {
   private usersCollection: AngularFirestoreCollection<IUser>;
   public isAuthenticated$!: Observable<boolean>;
+  private redirect: boolean = false
 
-  constructor(private auth: AngularFireAuth, private db: AngularFirestore) {
+  constructor(
+    private auth: AngularFireAuth,
+    private db: AngularFirestore,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {
     this.usersCollection = this.db.collection<IUser>('users');
     this.isAuthenticated$ = this.auth.user.pipe(map((user) => !!user));
+    // this.router.events.pipe(
+    //   filter((event) => event instanceof NavigationEnd),
+    //   map((event) => {
+    //     this.route.firstChild}),
+    //   switchMap((route) => route?.data ?? of({}))
+    // ).subscribe((data) => {
+    //   this.redirect = data.authOnly ?? false;
+    // });
   }
   
   ngOnInit(): void {
@@ -53,5 +68,6 @@ export class AuthService implements OnInit {
 
   async logout() {
     await this.auth.signOut();
+    await this.router.navigate(['/']);
   }
 }
