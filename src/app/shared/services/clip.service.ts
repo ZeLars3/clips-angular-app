@@ -38,4 +38,10 @@ export class ClipService {
       })
     );
   }
+
+  public updateClip(id: string, title: string) {
+    return  this.clipsCollection.doc(id).update({
+      title
+    });
+  }
 }
