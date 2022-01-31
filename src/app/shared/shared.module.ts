@@ -6,6 +6,7 @@ import { TabComponent } from './tab/tab.component';
 import { NgxMaskModule } from 'ngx-mask';
 import { AlertComponent } from './alert/alert.component';
 import { EventBlockDirective } from './directives/event-block.directive';
+import { SafeURLPipe } from './pipes/safe-url.pipe';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { EventBlockDirective } from './directives/event-block.directive';
     TabComponent,
     AlertComponent,
     EventBlockDirective,
+    SafeURLPipe,
   ],
   imports: [CommonModule, NgxMaskModule.forRoot()],
   exports: [

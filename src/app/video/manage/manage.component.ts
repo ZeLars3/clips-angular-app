@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import IClip from 'src/app/shared/models/clip';
 import { ClipService } from 'src/app/shared/services/clip.service';
-import {ModalService} from "../../shared/services/modal.service";
+import { ModalService } from '../../shared/services/modal.service';
 
 @Component({
   selector: 'app-manage',
@@ -13,7 +13,12 @@ export class ManageComponent implements OnInit {
   public clips: IClip[] = [];
   public activeClip: IClip | null = null;
 
-  constructor(private router: Router, private route: ActivatedRoute, private clipService: ClipService, private modalService: ModalService) {}
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute,
+    private clipService: ClipService,
+    private modalService: ModalService
+  ) {}
 
   public ngOnInit(): void {
     this.route.queryParamMap.subscribe((params: Params) => {

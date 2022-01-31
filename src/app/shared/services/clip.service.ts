@@ -6,6 +6,7 @@ import {
   DocumentReference,
   QuerySnapshot,
 } from '@angular/fire/compat/firestore';
+import { AngularFireStorage } from '@angular/fire/compat/storage';
 import { map, of, switchMap } from 'rxjs';
 
 import IClip from '../models/clip';
@@ -16,7 +17,7 @@ import IClip from '../models/clip';
 export class ClipService {
   public clipsCollection: AngularFirestoreCollection<IClip>;
 
-  constructor(private db: AngularFirestore, private auth: AngularFireAuth) {
+  constructor(private db: AngularFirestore, private auth: AngularFireAuth, private storage: AngularFireStorage) {
     this.clipsCollection = db.collection('clips');
   }
 
@@ -43,5 +44,15 @@ export class ClipService {
     return  this.clipsCollection.doc(id).update({
       title
     });
+  }
+
+  public async deleteClip(clip: IClip) {
+    const clipRef = this.storage.ref(`clips/${clip.fileName}`);
+    const screenshotRef = this.storage.ref(`screenshots/${clip.screenshotFileName}`);
+
+    await clipRef.delete();
+    await screenshotRef.delete();
+
+    await this.clipsCollection.doc(clip.docId).delete();
   }
 }
